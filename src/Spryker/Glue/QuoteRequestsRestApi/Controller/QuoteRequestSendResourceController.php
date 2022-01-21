@@ -14,19 +14,19 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiFactory getFactory()
  */
-class QuoteRequestCancelResourceController extends AbstractController
+class QuoteRequestSendResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Cancels the quote request."
+     *              "Sends the quote request."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "204": "Quote request canceled.",
+     *              "204": "Quote request sent.",
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",
      *              "422": "Unprocessable entity."
@@ -41,7 +41,7 @@ class QuoteRequestCancelResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createQuoteRequestCanceller()
-            ->cancelQuoteRequest($restRequest);
+            ->createQuoteRequestSender()
+            ->sendQuoteRequestToUser($restRequest);
     }
 }

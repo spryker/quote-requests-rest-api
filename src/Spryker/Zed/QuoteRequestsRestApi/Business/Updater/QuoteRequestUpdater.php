@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequestsRestApi\Business\Creator;
+namespace Spryker\Zed\QuoteRequestsRestApi\Business\Updater;
 
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -13,7 +13,7 @@ use Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperI
 use Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface;
 use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuoteRequestFacadeInterface;
 
-class QuoteRequestCreator implements QuoteRequestCreatorInterface
+class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface
@@ -50,11 +50,11 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         $quoteTransfer = $quoteRequestTransfer->getLatestVersionOrFail()->getQuoteOrFail();
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuidForCustomer(
-            $quoteTransfer->getCustomerOrFail(),
+            $quoteRequestTransfer->getCompanyUserOrFail()->getCustomerOrFail(),
             $quoteTransfer->getUuidOrFail(),
         );
 
@@ -69,16 +69,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         }
 
         $quoteRequestTransfer->getLatestVersionOrFail()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        if ($quoteResponseTransfer->getQuoteTransfer() !== null && $quoteResponseTransfer->getQuoteTransfer()->getCustomer() !== null) {
-            $quoteRequestTransfer->setCompanyUser($quoteResponseTransfer->getQuoteTransfer()->getCustomer()->getCompanyUserTransfer());
-        }
 
-        $quoteRequestResponseTransfer = $this->quoteRequestFacade->isQuoteApplicableForQuoteRequest($quoteRequestTransfer);
-
-        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $quoteRequestResponseTransfer;
-        }
-
-        return $this->quoteRequestFacade->createQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
     }
 }

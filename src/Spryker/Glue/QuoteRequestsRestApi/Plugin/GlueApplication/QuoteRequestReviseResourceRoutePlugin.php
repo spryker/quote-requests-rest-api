@@ -7,17 +7,18 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestReviseAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
-class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class QuoteRequestReviseResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for `quote-requests` resource.
+     * - Configures available actions for `quote-request-revise` resource.
      *
      * @api
      *
@@ -28,9 +29,7 @@ class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements Resourc
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post', true)
-            ->addGet('get', true)
-            ->addPatch('patch', true);
+            ->addPost('post', true);
 
         return $resourceRouteCollection;
     }
@@ -44,7 +43,7 @@ class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getResourceType(): string
     {
-        return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS;
+        return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUEST_REVISE;
     }
 
     /**
@@ -56,7 +55,7 @@ class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getController(): string
     {
-        return 'quote-requests-resource';
+        return 'quote-request-revise-resource';
     }
 
     /**
@@ -68,6 +67,14 @@ class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestQuoteRequestsRequestAttributesTransfer::class;
+        return RestQuoteRequestReviseAttributesTransfer::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS;
     }
 }
