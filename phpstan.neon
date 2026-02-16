@@ -2,3 +2,5 @@ parameters:
     level: 8
     ignoreErrors:
         - '#Method .+::call\(\) has parameter \$requestOptions with no value type specified in iterable type array.#'
+        -
+            identifier: phpDoc.parseError
