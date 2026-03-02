@@ -19,14 +19,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorI
 
 class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
 {
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
-     * @param \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface $quoteRequestValidator
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
-     */
     public function __construct(
         protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
         protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
@@ -37,12 +29,6 @@ class QuoteRequestUpdater implements QuoteRequestUpdaterInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function update(
         RestRequestInterface $restRequest,
         RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer

@@ -12,11 +12,5 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface QuoteRequestFilterBuilderInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param bool $isParent
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer|null
-     */
     public function buildFilterFromRequest(RestRequestInterface $restRequest, bool $isParent = false): ?QuoteRequestFilterTransfer;
 }

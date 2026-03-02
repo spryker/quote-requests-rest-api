@@ -14,12 +14,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class QuoteRequestResponseMapper implements QuoteRequestResponseMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
     public function mapErrorMessagesFromQuoteResponseToQuoteRequestResponse(
         QuoteResponseTransfer $quoteResponseTransfer,
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer
@@ -33,12 +27,6 @@ class QuoteRequestResponseMapper implements QuoteRequestResponseMapperInterface
         return $quoteRequestResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
     protected function mapQuoteErrorToMessage(QuoteErrorTransfer $quoteErrorTransfer, MessageTransfer $messageTransfer): MessageTransfer
     {
         return $messageTransfer->setValue($quoteErrorTransfer->getErrorIdentifier());

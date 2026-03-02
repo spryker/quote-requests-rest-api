@@ -14,20 +14,11 @@ use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCar
 
 class QuoteReader implements QuoteReaderInterface
 {
-    /**
-     * @param \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
-     */
     public function __construct(
         protected QuoteRequestsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function findQuoteByUuidForCustomer(
         CustomerTransfer $customerTransfer,
         string $uuid

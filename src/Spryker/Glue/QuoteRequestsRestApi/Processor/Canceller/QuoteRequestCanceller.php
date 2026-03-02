@@ -15,11 +15,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequest
 
 class QuoteRequestCanceller implements QuoteRequestCancellerInterface
 {
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
-     */
     public function __construct(
         protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
         protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
@@ -27,11 +22,6 @@ class QuoteRequestCanceller implements QuoteRequestCancellerInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function cancelQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest, true);

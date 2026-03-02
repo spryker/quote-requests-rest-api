@@ -25,11 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilderInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
-     * @param \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig $quoteRequestsRestApiConfig
-     */
     public function __construct(
         protected RestResourceBuilderInterface $restResourceBuilder,
         protected QuoteRequestMapperInterface $quoteRequestMapper,
@@ -37,11 +32,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     ) {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createFailedErrorResponse(QuoteRequestResponseTransfer $quoteRequestResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -57,11 +47,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $restResponse;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createFailedQuoteErrorResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -77,13 +62,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $restResponse;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param bool $isLatestVersionVisible
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createQuoteRequestRestResponse(
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
         RestRequestInterface $restRequest,
@@ -104,13 +82,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param bool $isLatestVersionVisible
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createQuoteRequestCollectionRestResponse(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
         RestRequestInterface $restRequest,
@@ -131,9 +102,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         );
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createQuoteRequestNotFoundErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -146,9 +114,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->addError($restErrorTransfer);
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createDeliveryDateIsNotValidErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -161,9 +126,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->addError($restErrorTransfer);
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
@@ -176,12 +138,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->addError($restErrorMessageTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
     protected function mapMessageTransferToRestErrorMessageTransfer(
         MessageTransfer $messageTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer
@@ -199,12 +155,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $this->createErrorMessageTransfer($messageTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
     protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
         QuoteErrorTransfer $quoteErrorTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer
@@ -255,12 +205,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $restResponse;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     protected function createRestResource(
         QuoteRequestTransfer $quoteRequestTransfer,
         RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
@@ -274,11 +218,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         return $quoteRequestResource->setPayload($quoteRequestTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
     protected function createErrorMessageTransfer(MessageTransfer $messageTransfer): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
@@ -287,11 +226,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->setDetail($messageTransfer->getMessage() ?? QuoteRequestsRestApiConfig::RESPONSE_PROBLEM_CREATING_QUOTE_REQUEST_DESCRIPTION);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
     protected function createQuoteErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())

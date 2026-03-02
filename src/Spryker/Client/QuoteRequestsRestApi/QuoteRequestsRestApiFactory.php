@@ -14,17 +14,11 @@ use Spryker\Client\QuoteRequestsRestApi\Zed\QuoteRequestsRestApiZedStubInterface
 
 class QuoteRequestsRestApiFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\QuoteRequestsRestApi\Zed\QuoteRequestsRestApiZedStubInterface
-     */
     public function createQuoteRequestsRestApiZedStub(): QuoteRequestsRestApiZedStubInterface
     {
         return new QuoteRequestsRestApiZedStub($this->getZedRequestClient());
     }
 
-    /**
-     * @return \Spryker\Client\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToZedRequestClientInterface
-     */
     public function getZedRequestClient(): QuoteRequestsRestApiToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestsRestApiDependencyProvider::CLIENT_ZED_REQUEST);

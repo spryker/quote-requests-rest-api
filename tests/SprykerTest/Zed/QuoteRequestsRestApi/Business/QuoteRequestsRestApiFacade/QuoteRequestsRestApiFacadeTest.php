@@ -35,18 +35,12 @@ class QuoteRequestsRestApiFacadeTest extends Unit
      */
     protected $quoteTransfer;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->quoteTransfer = $this->tester->createQuoteTransfer();
     }
 
-    /**
-     * @return void
-     */
     public function testCreateQuoteRequestCreatesQuoteRequest(): void
     {
         // Arrange

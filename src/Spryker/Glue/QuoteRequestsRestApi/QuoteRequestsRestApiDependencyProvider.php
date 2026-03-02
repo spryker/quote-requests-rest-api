@@ -32,11 +32,6 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     public const PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER';
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -47,11 +42,6 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addQuoteRequestClient(Container $container): Container
     {
         $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
@@ -63,11 +53,6 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addCartsRestApiResource(Container $container): Container
     {
         $container->set(static::RESOURCE_CARTS_REST_API, function (Container $container) {
@@ -79,11 +64,6 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addRestQuoteRequestAttributesExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER, function () {

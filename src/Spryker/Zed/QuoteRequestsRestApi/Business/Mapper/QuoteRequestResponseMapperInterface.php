@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface QuoteRequestResponseMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
     public function mapErrorMessagesFromQuoteResponseToQuoteRequestResponse(
         QuoteResponseTransfer $quoteResponseTransfer,
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer

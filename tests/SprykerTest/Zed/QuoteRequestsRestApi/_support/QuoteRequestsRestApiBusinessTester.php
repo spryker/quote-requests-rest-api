@@ -52,12 +52,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
      */
     public const FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY = 'configurable-bundle-group-key';
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
     public function createQuoteRequest(
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer,
         CompanyUserTransfer $companyUserTransfer
@@ -68,11 +62,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
-     */
     public function createQuoteRequestVersion(QuoteTransfer $quoteTransfer): QuoteRequestVersionTransfer
     {
         return $this->haveQuoteRequestVersion([
@@ -80,11 +69,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     public function createCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
@@ -100,9 +84,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         );
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
     public function createCompany(): CompanyTransfer
     {
         return $this->haveCompany(
@@ -115,11 +96,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
     public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
@@ -132,9 +108,6 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         );
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function createQuoteTransfer(): QuoteTransfer
     {
         return $this->havePersistentQuote([
@@ -156,23 +129,12 @@ class QuoteRequestsRestApiBusinessTester extends Actor
         ]);
     }
 
-    /**
-     * @param string|null $customerReference
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     protected function buildCustomerTransfer(?string $customerReference, CompanyUserTransfer $companyUserTransfer): CustomerTransfer
     {
         return (new CustomerBuilder())->build()->setCompanyUserTransfer($companyUserTransfer)
             ->setCustomerReference($customerReference);
     }
 
-    /**
-     * @param string|null $groupKey
-     *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
-     */
     protected function buildConfiguredBundleTransfer(?string $groupKey = null): ConfiguredBundleTransfer
     {
         return (new ConfiguredBundleBuilder())->build()

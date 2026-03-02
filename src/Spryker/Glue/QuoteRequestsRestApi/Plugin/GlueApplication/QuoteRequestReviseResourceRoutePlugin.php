@@ -70,9 +70,6 @@ class QuoteRequestReviseResourceRoutePlugin extends AbstractPlugin implements Re
         return RestQuoteRequestReviseAttributesTransfer::class;
     }
 
-    /**
-     * @return string
-     */
     public function getParentResourceType(): string
     {
         return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS;

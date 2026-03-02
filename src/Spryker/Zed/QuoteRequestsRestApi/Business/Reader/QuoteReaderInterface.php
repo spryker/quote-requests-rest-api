@@ -12,11 +12,5 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface QuoteReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function findQuoteByUuidForCustomer(CustomerTransfer $customerTransfer, string $uuid): QuoteResponseTransfer;
 }

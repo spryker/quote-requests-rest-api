@@ -28,23 +28,11 @@ interface QuoteRequestMapperInterface
         bool $isLatestVersionVisible = true
     ): array;
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
     public function mapRestRequestToQuoteRequestTransfer(
         RestRequestInterface $restRequestTransfer,
         QuoteRequestTransfer $quoteRequestTransfer
     ): QuoteRequestTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
     public function mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
         RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer,
         QuoteRequestTransfer $quoteRequestTransfer

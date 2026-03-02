@@ -17,11 +17,6 @@ class QuoteRequestValidator implements QuoteRequestValidatorInterface
      */
     protected const KEY_DELIVERY_DATE = 'delivery_date';
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return bool
-     */
     public function validateDeliveryDate(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         if (!$this->hasDataToValidate($quoteRequestTransfer)) {
@@ -33,21 +28,11 @@ class QuoteRequestValidator implements QuoteRequestValidatorInterface
         return $deliveryDate === null || $this->isDeliveryDateValid((string)$deliveryDate);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return bool
-     */
     protected function hasDataToValidate(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getLatestVersion() && $quoteRequestTransfer->getLatestVersionOrFail()->getMetadata();
     }
 
-    /**
-     * @param string $deliveryDate
-     *
-     * @return bool
-     */
     protected function isDeliveryDateValid(string $deliveryDate): bool
     {
         return strtotime($deliveryDate) !== false && (new DateTime())->setTime(0, 0) <= new DateTime($deliveryDate);

@@ -25,17 +25,11 @@ use Spryker\Zed\QuoteRequestsRestApi\QuoteRequestsRestApiDependencyProvider;
  */
 class QuoteRequestsRestApiBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface
-     */
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader($this->getCartsRestApiFacade());
     }
 
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Creator\QuoteRequestCreatorInterface
-     */
     public function createQuoteRequestCreator(): QuoteRequestCreatorInterface
     {
         return new QuoteRequestCreator(
@@ -45,9 +39,6 @@ class QuoteRequestsRestApiBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Updater\QuoteRequestUpdaterInterface
-     */
     public function createQuoteRequestUpdater(): QuoteRequestUpdaterInterface
     {
         return new QuoteRequestUpdater(
@@ -57,25 +48,16 @@ class QuoteRequestsRestApiBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperInterface
-     */
     public function createQuoteRequestResponseMapper(): QuoteRequestResponseMapperInterface
     {
         return new QuoteRequestResponseMapper();
     }
 
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCartsRestApiFacadeInterface
-     */
     public function getCartsRestApiFacade(): QuoteRequestsRestApiToCartsRestApiFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestsRestApiDependencyProvider::FACADE_CARTS_REST_API);
     }
 
-    /**
-     * @return \Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuoteRequestFacadeInterface
-     */
     public function getQuoteRequestFacade(): QuoteRequestsRestApiToQuoteRequestFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestsRestApiDependencyProvider::FACADE_QUOTE_REQUEST);

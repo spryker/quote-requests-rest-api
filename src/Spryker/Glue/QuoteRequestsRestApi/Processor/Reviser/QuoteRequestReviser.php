@@ -15,11 +15,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequest
 
 class QuoteRequestReviser implements QuoteRequestReviserInterface
 {
-    /**
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Builder\QuoteRequestFilterBuilderInterface $quoteRequestFilterBuilder
-     */
     public function __construct(
         protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
         protected QuoteRequestsRestApiToQuoteRequestClientInterface $quoteRequestClient,
@@ -27,11 +22,6 @@ class QuoteRequestReviser implements QuoteRequestReviserInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function reviseQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteRequestFilterTransfer = $this->quoteRequestFilterBuilder->buildFilterFromRequest($restRequest, true);

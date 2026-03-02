@@ -17,12 +17,6 @@ use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorI
 
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
-    /**
-     * @param \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
-     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface $quoteRequestValidator
-     */
     public function __construct(
         protected QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
         protected QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
@@ -31,11 +25,6 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     ) {
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteRequestTransfer = $this->quoteRequestMapper->mapRestRequestToQuoteRequestTransfer(

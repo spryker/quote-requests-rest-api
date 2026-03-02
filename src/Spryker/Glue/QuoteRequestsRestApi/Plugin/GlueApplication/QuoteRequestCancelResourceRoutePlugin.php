@@ -70,9 +70,6 @@ class QuoteRequestCancelResourceRoutePlugin extends AbstractPlugin implements Re
         return RestQuoteRequestCancelAttributesTransfer::class;
     }
 
-    /**
-     * @return string
-     */
     public function getParentResourceType(): string
     {
         return QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS;

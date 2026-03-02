@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface QuoteRequestValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return bool
-     */
     public function validateDeliveryDate(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

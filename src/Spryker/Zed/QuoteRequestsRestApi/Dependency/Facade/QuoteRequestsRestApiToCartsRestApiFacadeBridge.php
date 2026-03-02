@@ -25,11 +25,6 @@ class QuoteRequestsRestApiToCartsRestApiFacadeBridge implements QuoteRequestsRes
         $this->cartsRestApiFacade = $cartsRestApiFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);

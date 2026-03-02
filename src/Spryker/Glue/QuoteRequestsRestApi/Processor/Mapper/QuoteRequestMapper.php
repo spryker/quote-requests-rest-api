@@ -66,12 +66,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         );
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
     public function mapRestRequestToQuoteRequestTransfer(
         RestRequestInterface $restRequestTransfer,
         QuoteRequestTransfer $quoteRequestTransfer
@@ -105,12 +99,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             ->setLatestVersion($quoteRequestVersionTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
     public function mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
         RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer,
         QuoteRequestTransfer $quoteRequestTransfer
@@ -130,12 +118,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         return $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestCustomerTransfer $restQuoteRequestCustomerTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestCustomerTransfer
-     */
     protected function mapQuoteRequestTransferToRestQuoteRequestCustomerTransfer(
         QuoteRequestTransfer $quoteRequestTransfer,
         RestQuoteRequestCustomerTransfer $restQuoteRequestCustomerTransfer
@@ -158,14 +140,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         return $restQuoteRequestCustomerTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param bool $isLatestVersionVisible
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer
-     */
     protected function mapQuoteRequestTransferToRestQuoteRequestsAttributesTransfer(
         QuoteRequestTransfer $quoteRequestTransfer,
         RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer,
@@ -255,12 +229,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         return $restQuoteRequestsAttributesTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsCartTransfer $restQuoteRequestsCartTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsCartTransfer
-     */
     protected function mapQuoteTransferToRestQuoteRequestsCartTransfer(
         QuoteTransfer $quoteTransfer,
         RestQuoteRequestsCartTransfer $restQuoteRequestsCartTransfer
@@ -283,12 +251,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsCartTransfer $restQuoteRequestsCartTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsCartTransfer
-     */
     protected function mapTotalsTransferToRestQuoteRequestsTotalsTransfer(
         QuoteTransfer $quoteTransfer,
         RestQuoteRequestsCartTransfer $restQuoteRequestsCartTransfer
@@ -303,13 +265,6 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param bool $isLatestVersionVisible
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
-     */
     protected function findConcreteVersion(
         QuoteRequestTransfer $quoteRequestTransfer,
         RestRequestInterface $restRequest,
