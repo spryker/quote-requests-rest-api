@@ -1,0 +1,56 @@
+resource:
+    name: QuoteRequestRevise
+    shortName: quote-request-revise
+    description: 'Revise a quote request'
+
+    processor: Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor\QuoteRequestReviseStorefrontProcessor
+
+    paginationEnabled: false
+
+    security: "is_granted('ROLE_CUSTOMER')"
+
+    operations:
+        - type: Post
+          description: 'Revise a quote request'
+          uriTemplate: '/quote-requests/{quoteRequestReference}/quote-request-revise'
+          uriVariables:
+              quoteRequestReference:
+                  toProperty: 'quoteRequest'
+                  fromClass: QuoteRequestsStorefrontResource
+          openapiContext:
+              responses:
+                  200:
+                      description: 'Quote request reverted to draft for revision.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Quote request not found (code 4501).'
+                  422:
+                      description: 'Quote request status does not allow revision (code 4504) or concurrent edit detected (code 4505).'
+
+    properties:
+        quoteRequestReference:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            description: 'Reference of the revised quote request'
+            openapiContext:
+                example: 'DE--21-123'
+
+        status:
+            type: string
+            writable: false
+            readable: true
+            description: 'Status after revision'
+            openapiContext:
+                example: 'draft'
+
+        quoteRequest:
+            type: QuoteRequestsStorefrontResource
+            writable: false
+            readable: false
+            required: false
+            description: 'The parent quote request'

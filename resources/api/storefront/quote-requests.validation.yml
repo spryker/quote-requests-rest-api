@@ -1,0 +1,7 @@
+post:
+    cartUuid:
+        - NotBlank: { allowNull: true }
+
+patch:
+    cartUuid:
+        - NotBlank: { allowNull: true }

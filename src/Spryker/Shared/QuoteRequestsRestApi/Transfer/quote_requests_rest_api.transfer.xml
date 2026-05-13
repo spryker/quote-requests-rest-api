@@ -151,6 +151,11 @@
         <property name="currency" type="Currency" description="The currency used for a transaction or price."/>
         <property name="store" type="Store" description="The store context for an operation, determining which store's data is used."/>
         <property name="totals" type="Totals" description="An object containing the calculated totals for an order or quote (e.g., subtotal, grandTotal)."/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
@@ -158,6 +163,30 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amount" type="decimal" description="A numerical value, often used for price, quantity, or discount."/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="sku" type="string"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -165,6 +194,8 @@
         <property name="customer" type="Customer" description="A data object representing a customer."/>
         <property name="fkCompany" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -177,6 +208,9 @@
         <property name="idCustomer" type="int"/>
         <property name="companyUserTransfer" type="CompanyUser" description="A data transfer object for a company user."/>
         <property name="customerReference" type="string" description="A unique reference for a customer."/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -193,6 +227,7 @@
         <property name="quoteRequestReference" type="string" description="A unique reference for a quote request."/>
         <property name="isLatestVersionVisible" type="bool" description="A flag indicating if the latest version of a quote request is visible."/>
         <property name="latestVisibleVersion" type="QuoteRequestVersion" description="The latest version of a quote request that is visible to the user."/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
@@ -226,6 +261,7 @@
     </transfer>
 
     <transfer name="Totals">
+        <property name="taxTotal" type="TaxTotal"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -243,6 +279,42 @@
 
     <transfer name="RestCartsAttributes">
         <property name="isLocked" type="bool" strict="true" description="A flag indicating if an entity is locked for editing."/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Discount">
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="groupName" type="string"/>
+        <property name="sku" type="string" description="The Stock Keeping Unit, a unique identifier for a concrete product."/>
+        <property name="value" type="string"/>
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="TaxTotal">
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
     </transfer>
 
 </transfers>

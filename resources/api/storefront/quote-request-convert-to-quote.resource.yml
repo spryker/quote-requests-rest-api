@@ -1,0 +1,64 @@
+resource:
+    name: QuoteRequestConvertToQuote
+    shortName: quote-request-convert-to-quote
+    description: 'Convert a quote request to a locked quote'
+
+    processor: Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor\QuoteRequestConvertToQuoteStorefrontProcessor
+
+    paginationEnabled: false
+
+    security: "is_granted('ROLE_CUSTOMER')"
+
+    operations:
+        - type: Post
+          description: 'Convert a quote request to a locked quote'
+          uriTemplate: '/quote-requests/{quoteRequestReference}/quote-request-convert-to-quote'
+          uriVariables:
+              quoteRequestReference:
+                  toProperty: 'quoteRequest'
+                  fromClass: QuoteRequestsStorefrontResource
+          openapiContext:
+              responses:
+                  200:
+                      description: 'Quote request converted to a locked quote.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Quote request not found (code 4501).'
+                  422:
+                      description: 'Quote request status does not allow conversion (code 4504) or validation failed (code 4506).'
+
+    properties:
+        quoteRequestReference:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            description: 'Reference of the converted quote request'
+            openapiContext:
+                example: 'DE--21-123'
+
+        status:
+            type: string
+            writable: false
+            readable: true
+            description: 'Status after conversion'
+            openapiContext:
+                example: 'closed'
+
+        isLocked:
+            type: boolean
+            writable: false
+            readable: true
+            description: 'Whether the resulting quote is locked'
+            openapiContext:
+                example: true
+
+        quoteRequest:
+            type: QuoteRequestsStorefrontResource
+            writable: false
+            readable: false
+            required: false
+            description: 'The parent quote request'

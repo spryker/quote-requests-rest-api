@@ -1,0 +1,230 @@
+resource:
+    name: QuoteRequests
+    shortName: quote-requests
+    description: 'Quote request management for company users'
+
+    provider: Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Provider\QuoteRequestsStorefrontProvider
+    processor: Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor\QuoteRequestsStorefrontProcessor
+
+    paginationEnabled: true
+
+    security: "is_granted('ROLE_CUSTOMER')"
+
+    operations:
+        - type: GetCollection
+          description: 'Retrieve all quote requests for the authenticated company user'
+          openapiContext:
+              responses:
+                  200:
+                      description: 'Collection of quote requests for the authenticated company user.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+
+        - type: Get
+          description: 'Retrieve a specific quote request by reference'
+          openapiContext:
+              responses:
+                  200:
+                      description: 'Quote request returned.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Quote request not found (code 4501).'
+
+        - type: Post
+          description: 'Create a new quote request'
+          openapiContext:
+              responses:
+                  201:
+                      description: 'Quote request created.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Cart with given uuid not found (code 101) or company user not found (code 1404).'
+                  422:
+                      description: 'Request validation failed (cartUuid blank — code 901, cart empty — code 4503, invalid delivery date — code 4506).'
+
+        - type: Patch
+          description: 'Update an existing quote request'
+          openapiContext:
+              responses:
+                  200:
+                      description: 'Quote request updated.'
+                  401:
+                      description: 'Missing or invalid access token.'
+                  403:
+                      description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Quote request not found (code 4501) or cart not found (code 101).'
+                  422:
+                      description: 'Wrong status for update (code 4504), concurrent edit (code 4505) or validation failure (code 4506).'
+
+    properties:
+        quoteRequestReference:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            description: 'Unique quote request reference'
+            openapiContext:
+                example: 'DE--21-123'
+
+        status:
+            type: string
+            writable: false
+            readable: true
+            description: 'Current status of the quote request'
+            openapiContext:
+                example: 'draft'
+
+        isLatestVersionVisible:
+            type: boolean
+            writable: false
+            readable: true
+            description: 'Whether the latest version is visible to the customer'
+            openapiContext:
+                example: true
+
+        createdAt:
+            type: string
+            writable: false
+            readable: true
+            description: 'Creation timestamp'
+            openapiContext:
+                example: '2025-01-01T10:00:00+00:00'
+
+        validUntil:
+            type: string
+            writable: false
+            readable: true
+            description: 'Expiration timestamp'
+            openapiContext:
+                example: '2025-02-01T23:59:59+00:00'
+
+        versions:
+            type: array
+            writable: false
+            readable: true
+            description: 'List of version references'
+            openapiContext:
+                example: ['DE--21-123-1', 'DE--21-123-2']
+
+        shownVersion:
+            type: array
+            writable: false
+            readable: true
+            description: 'Currently shown version with cart, metadata, and totals'
+            openapiContext:
+                example:
+                    version: 1
+                    versionReference: 'DE--21-123-1'
+                    cart:
+                        priceMode: 'GROSS_MODE'
+                        currency: 'EUR'
+                        store: 'DE'
+                        items:
+                            - sku: '001_25904006'
+                              quantity: 2
+                              unitPrice: 3500
+                              calculations:
+                                  sumGrossPrice: 7000
+                        billingAddress: null
+                        discounts: []
+                        shipments: []
+                    metadata:
+                        delivery_date: '2025-03-01'
+                        note: 'Please deliver before noon'
+                    totals:
+                        subtotal: 7000
+                        grandTotal: 8330
+
+        customer:
+            type: array
+            writable: false
+            readable: true
+            description: 'Customer and company user information'
+            openapiContext:
+                example:
+                    firstName: 'Sonia'
+                    lastName: 'Wagner'
+                    email: 'sonia@acme.com'
+                    customerReference: 'DE--21'
+                    idCompanyUser: 18
+                    idCompany: 9
+                    idCompanyBusinessUnit: 29
+
+        cartUuid:
+            type: string
+            writable: true
+            readable: false
+            required: false
+            description: 'Cart UUID to create quote request from'
+            openapiContext:
+                example: '1ce91011-8d60-59ef-9fe0-4493ef36c4f0'
+
+        metadata:
+            type: array
+            writable: true
+            readable: false
+            required: false
+            description: 'Metadata including delivery date and note'
+            openapiContext:
+                example:
+                    delivery_date: '2025-03-01'
+                    note: 'Urgent delivery requested'
+
+        companyUserUuid:
+            type: string
+            writable: false
+            readable: false
+            required: false
+            description: 'Company user UUID feeding the `company-users` relationship — not part of the JSON:API response body.'
+
+        companyBusinessUnitUuid:
+            type: string
+            writable: false
+            readable: false
+            required: false
+            description: 'Company business unit UUID feeding the `company-business-units` relationship — not part of the JSON:API response body.'
+
+        customerReference:
+            type: string
+            writable: false
+            readable: false
+            required: false
+            description: 'Customer reference feeding the `customers` relationship — not part of the JSON:API response body.'
+
+        concreteProductSkus:
+            type: array
+            writable: false
+            readable: false
+            required: false
+            description: 'Concrete product SKUs from the quote request items, feeding the `concrete-products` relationship (one child per SKU) — not part of the JSON:API response body.'
+
+    includes:
+        - relationshipName: company-users
+          targetResource: CompanyUsers
+          uriVariableMappings:
+              companyUserUuid: uuid
+
+        - relationshipName: company-business-units
+          targetResource: CompanyBusinessUnits
+          uriVariableMappings:
+              companyBusinessUnitUuid: uuid
+
+        - relationshipName: customers
+          targetResource: Customers
+          uriVariableMappings:
+              customerReference: customerReference
+
+        - relationshipName: concrete-products
+          targetResource: ConcreteProducts
+          uriTemplate: /concrete-products/{sku}
+          uriVariableMappings:
+              concreteProductSkus: sku
