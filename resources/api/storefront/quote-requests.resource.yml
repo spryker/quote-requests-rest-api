@@ -210,8 +210,7 @@ resource:
     includes:
         - relationshipName: company-users
           targetResource: CompanyUsers
-          uriVariableMappings:
-              companyUserUuid: uuid
+          resolverClass: Spryker\Glue\CompanyUsersRestApi\Api\Storefront\Relationship\CompanyUsersRelationshipResolver
 
         - relationshipName: company-business-units
           targetResource: CompanyBusinessUnits
