@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Provider;
 
-use Generated\Api\Storefront\QuoteRequestsStorefrontResource;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
@@ -49,10 +48,9 @@ class QuoteRequestsStorefrontProvider extends AbstractStorefrontProvider
         $resources = [];
 
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
-            $resources[] = $this->quoteRequestResourceMapper->denormalizeQuoteRequestResource(
+            $resources[] = $this->quoteRequestResourceMapper->buildQuoteRequestsStorefrontResource(
                 $quoteRequestTransfer,
                 $this->getLocale()->getLocaleNameOrFail(),
-                QuoteRequestsStorefrontResource::class,
             );
         }
 
@@ -83,10 +81,9 @@ class QuoteRequestsStorefrontProvider extends AbstractStorefrontProvider
             throw $this->exceptionFactory->createQuoteRequestNotFoundException();
         }
 
-        return $this->quoteRequestResourceMapper->denormalizeQuoteRequestResource(
+        return $this->quoteRequestResourceMapper->buildQuoteRequestsStorefrontResource(
             $quoteRequestResponseTransfer->getQuoteRequestOrFail(),
             $this->getLocale()->getLocaleNameOrFail(),
-            QuoteRequestsStorefrontResource::class,
         );
     }
 

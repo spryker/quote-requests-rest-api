@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Mapper;
 
+use Generated\Api\Storefront\QuoteRequestSendToUserStorefrontResource;
+use Generated\Api\Storefront\QuoteRequestsStorefrontResource;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -34,42 +36,34 @@ class QuoteRequestResourceMapper
     ) {
     }
 
-    /**
-     * @template TResource of object
-     *
-     * @param class-string<TResource> $resourceClass
-     *
-     * @return TResource
-     */
-    public function denormalizeQuoteRequestResource(
+    public function buildQuoteRequestsStorefrontResource(
         QuoteRequestTransfer $quoteRequestTransfer,
         string $localeName,
-        string $resourceClass,
-    ): object {
+    ): QuoteRequestsStorefrontResource {
         $data = $this->mapQuoteRequestTransferToResourceData($quoteRequestTransfer, $localeName);
 
-        $resource = $this->serializer->denormalize($data, $resourceClass);
-        // PHPStan narrows `$resource` to `TResource` via the `class-string<TResource> $resourceClass`
-        // generic — runtime assertion is a no-op in production and documents the contract.
-        assert($resource instanceof $resourceClass);
+        /** @var \Generated\Api\Storefront\QuoteRequestsStorefrontResource $resource */
+        $resource = $this->serializer->denormalize($data, QuoteRequestsStorefrontResource::class);
 
         $companyUserTransfer = $quoteRequestTransfer->getCompanyUser();
 
-        if (property_exists($resource, 'companyUserUuid')) {
-            $resource->companyUserUuid = $companyUserTransfer?->getUuid();
-        }
+        $resource->companyUserUuid = $companyUserTransfer?->getUuid();
+        $resource->companyBusinessUnitUuid = $companyUserTransfer?->getCompanyBusinessUnit()?->getUuid();
+        $resource->customerReference = $companyUserTransfer?->getCustomer()?->getCustomerReference();
+        $resource->concreteProductSkus = $this->extractConcreteProductSkus($quoteRequestTransfer);
+        $resource->idCompany = $companyUserTransfer?->getFkCompany();
 
-        if (property_exists($resource, 'companyBusinessUnitUuid')) {
-            $resource->companyBusinessUnitUuid = $companyUserTransfer?->getCompanyBusinessUnit()?->getUuid();
-        }
+        return $resource;
+    }
 
-        if (property_exists($resource, 'customerReference')) {
-            $resource->customerReference = $companyUserTransfer?->getCustomer()?->getCustomerReference();
-        }
+    public function buildQuoteRequestSendToUserStorefrontResource(
+        QuoteRequestTransfer $quoteRequestTransfer,
+        string $localeName,
+    ): QuoteRequestSendToUserStorefrontResource {
+        $data = $this->mapQuoteRequestTransferToResourceData($quoteRequestTransfer, $localeName);
 
-        if (property_exists($resource, 'concreteProductSkus')) {
-            $resource->concreteProductSkus = $this->extractConcreteProductSkus($quoteRequestTransfer);
-        }
+        /** @var \Generated\Api\Storefront\QuoteRequestSendToUserStorefrontResource $resource */
+        $resource = $this->serializer->denormalize($data, QuoteRequestSendToUserStorefrontResource::class);
 
         return $resource;
     }
@@ -98,6 +92,7 @@ class QuoteRequestResourceMapper
         $data['companyBusinessUnitUuid'] = $companyUserTransfer?->getCompanyBusinessUnit()?->getUuid();
         $data['customerReference'] = $companyUserTransfer?->getCustomer()?->getCustomerReference();
         $data['concreteProductSkus'] = $this->extractConcreteProductSkus($quoteRequestTransfer);
+        $data['idCompany'] = $companyUserTransfer?->getFkCompany();
 
         return $data;
     }

@@ -207,10 +207,21 @@ resource:
             required: false
             description: 'Concrete product SKUs from the quote request items, feeding the `concrete-products` relationship (one child per SKU) — not part of the JSON:API response body.'
 
+        idCompany:
+            type: integer
+            writable: false
+            readable: false
+            required: false
+            description: 'Database identifier of the company that owns the quote request, feeding the `companies` relationship — not part of the JSON:API response body.'
+
     includes:
         - relationshipName: company-users
           targetResource: CompanyUsers
           resolverClass: Spryker\Glue\CompanyUsersRestApi\Api\Storefront\Relationship\CompanyUsersRelationshipResolver
+
+        - relationshipName: companies
+          targetResource: Companies
+          resolverClass: Spryker\Glue\CompaniesRestApi\Api\Storefront\Relationship\CompaniesByIdCompanyRelationshipResolver
 
         - relationshipName: company-business-units
           targetResource: CompanyBusinessUnits

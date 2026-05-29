@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor;
 
-use Generated\Api\Storefront\QuoteRequestSendToUserStorefrontResource;
 use Spryker\Client\QuoteRequest\QuoteRequestClientInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Exception\QuoteRequestsExceptionFactory;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Mapper\QuoteRequestResourceMapper;
@@ -37,10 +36,9 @@ class QuoteRequestSendToUserStorefrontProcessor extends AbstractQuoteRequestStor
 
         $this->assertSuccessful($quoteRequestResponseTransfer);
 
-        return $this->quoteRequestResourceMapper->denormalizeQuoteRequestResource(
+        return $this->quoteRequestResourceMapper->buildQuoteRequestSendToUserStorefrontResource(
             $quoteRequestResponseTransfer->getQuoteRequestOrFail(),
             $this->getLocale()->getLocaleNameOrFail(),
-            QuoteRequestSendToUserStorefrontResource::class,
         );
     }
 }

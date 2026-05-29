@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor;
 
 use DateTime;
-use Generated\Api\Storefront\QuoteRequestsStorefrontResource;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
@@ -56,8 +55,8 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
     {
         $companyUserTransfer = $this->resolveFullCompanyUser($this->resolveCompanyUser());
 
+        /** @var array<string, mixed> $resourceData */
         $resourceData = $this->serializer->normalize($data);
-        assert(is_array($resourceData));
         $quoteRequestTransfer = $this->mapResourceDataToTransfer($resourceData, new QuoteRequestTransfer());
 
         $quoteRequestTransfer->setCompanyUser($companyUserTransfer);
@@ -74,10 +73,9 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
 
         $this->assertSuccessful($quoteRequestResponseTransfer);
 
-        return $this->quoteRequestResourceMapper->denormalizeQuoteRequestResource(
+        return $this->quoteRequestResourceMapper->buildQuoteRequestsStorefrontResource(
             $this->reloadQuoteRequest($quoteRequestResponseTransfer->getQuoteRequestOrFail(), $companyUserTransfer),
             $this->getLocale()->getLocaleNameOrFail(),
-            QuoteRequestsStorefrontResource::class,
         );
     }
 
@@ -102,8 +100,8 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
             throw $this->exceptionFactory->createQuoteRequestNotFoundException();
         }
 
+        /** @var array<string, mixed> $resourceData */
         $resourceData = $this->serializer->normalize($data);
-        assert(is_array($resourceData));
         $quoteRequestTransfer = $this->mapResourceDataToTransfer(
             $resourceData,
             $quoteRequestResponseTransfer->getQuoteRequestOrFail(),
@@ -121,10 +119,9 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
 
         $this->assertSuccessful($quoteRequestResponseTransfer);
 
-        return $this->quoteRequestResourceMapper->denormalizeQuoteRequestResource(
+        return $this->quoteRequestResourceMapper->buildQuoteRequestsStorefrontResource(
             $this->reloadQuoteRequest($quoteRequestResponseTransfer->getQuoteRequestOrFail(), $companyUserTransfer),
             $this->getLocale()->getLocaleNameOrFail(),
-            QuoteRequestsStorefrontResource::class,
         );
     }
 
