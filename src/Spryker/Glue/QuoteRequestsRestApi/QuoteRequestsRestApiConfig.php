@@ -14,26 +14,36 @@ use Symfony\Component\HttpFoundation\Response;
 class QuoteRequestsRestApiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const RESOURCE_QUOTE_REQUESTS = 'quote-requests';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESOURCE_QUOTE_REQUEST_CANCEL = 'quote-request-cancel';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESOURCE_QUOTE_REQUEST_REVISE = 'quote-request-revise';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESOURCE_QUOTE_REQUEST_SEND_TO_USER = 'quote-request-send-to-user';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESOURCE_QUOTE_REQUEST_CONVERT_TO_QUOTE = 'quote-request-convert-to-quote';
@@ -53,6 +63,8 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
+     * @api
+     *
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
      *
      * @var string
@@ -95,6 +107,8 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_METADATA_NOTE = 1024;
 
     /**
+     * @api
+     *
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
      *
      * @var string
@@ -102,6 +116,8 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     public const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
 
     /**
+     * @api
+     *
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
      *
      * @var string
@@ -109,106 +125,148 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_WRONG_STATUS = '4504';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_CONCURRENT_CUSTOMERS = '4505';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_REFERENCE_MISSING = '4502';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_CART_IS_EMPTY = '4503';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_VALIDATION = '4506';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_IS = '4506';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_METADATA_DELIVERY_DATE_IS_INVALID = '4506';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_METADATA_NOTE_IS_INVALID = '4506';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_METADATA_PURCHASE_ORDER_NUMBER_IS_INVALID = '4506';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_CART_IS_EMPTY = 'Cart is empty.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND = 'Quote request not found.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_PROBLEM_CREATING_QUOTE_REQUEST_DESCRIPTION = 'There was a problem adding the quote request.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_WRONG_STATUS = 'Wrong Quote Request status for this operation.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_CONCURRENT_CUSTOMERS = 'Quote Request could not be updated due to parallel-customer interaction.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_REFERENCE_MISSING = 'Quote request reference is required.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_VALIDATION = 'Request for quote denied. User does not have permissions to request quote.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAILS_METADATA_DELIVERY_DATE_IS_INVALID = 'The date should be greater than the current date.';
