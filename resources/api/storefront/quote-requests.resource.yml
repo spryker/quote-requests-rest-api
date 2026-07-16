@@ -116,48 +116,186 @@ resource:
                 example: ['DE--21-123-1', 'DE--21-123-2']
 
         shownVersion:
-            type: array
+            type: object
+            objectName: QuoteRequestVersion
             writable: false
             readable: true
             description: 'Currently shown version with cart, metadata, and totals'
-            openapiContext:
-                example:
-                    version: 1
-                    versionReference: 'DE--21-123-1'
-                    cart:
-                        priceMode: 'GROSS_MODE'
-                        currency: 'EUR'
-                        store: 'DE'
+            properties:
+                version:
+                    type: integer
+                    description: 'Version number.'
+                    openapiContext:
+                        example: 1
+                versionReference:
+                    type: string
+                    description: 'Version reference.'
+                    openapiContext:
+                        example: 'DE--21-123-1'
+                createdAt:
+                    type: string
+                    description: 'Creation timestamp of this version.'
+                    openapiContext:
+                        example: '2025-01-01T10:00:00+00:00'
+                cart:
+                    type: object
+                    objectName: QuoteRequestVersionCart
+                    description: 'Cart snapshot for this version.'
+                    properties:
+                        priceMode:
+                            type: string
+                            description: 'Price mode.'
+                            openapiContext:
+                                example: 'GROSS_MODE'
+                        currency:
+                            type: string
+                            description: 'Currency code.'
+                            openapiContext:
+                                example: 'EUR'
+                        store:
+                            type: string
+                            description: 'Store name.'
+                            openapiContext:
+                                example: 'DE'
+                        billingAddress:
+                            type: object
+                            description: 'Billing address.'
+                            openapiContext:
+                                example: null
+                        discounts:
+                            type: array
+                            description: 'Applied discounts.'
+                            openapiContext:
+                                example: []
+                        shipments:
+                            type: array
+                            description: 'Shipments.'
+                            openapiContext:
+                                example: []
                         items:
-                            - sku: '001_25904006'
-                              quantity: 2
-                              unitPrice: 3500
-                              calculations:
-                                  sumGrossPrice: 7000
-                        billingAddress: null
-                        discounts: []
-                        shipments: []
-                    metadata:
-                        delivery_date: '2025-03-01'
-                        note: 'Please deliver before noon'
-                    totals:
-                        subtotal: 7000
-                        grandTotal: 8330
+                            type: array
+                            description: 'Cart items.'
+                            openapiContext:
+                                example:
+                                    - sku: '001_25904006'
+                                      quantity: 2
+                                      unitPrice: 3500
+                                      calculations:
+                                          sumGrossPrice: 7000
+                        totals:
+                            type: object
+                            description: 'Calculated totals for the cart snapshot.'
+                            properties:
+                                expenseTotal:
+                                    type: integer
+                                    description: 'Total expenses in cents.'
+                                    openapiContext:
+                                        example: 590
+                                discountTotal:
+                                    type: integer
+                                    description: 'Total discount in cents.'
+                                    openapiContext:
+                                        example: 0
+                                taxTotal:
+                                    type: object
+                                    description: 'Tax total breakdown.'
+                                    properties:
+                                        tax_rate:
+                                            type: number
+                                            description: 'Effective tax rate.'
+                                            openapiContext:
+                                                example: 19
+                                        amount:
+                                            type: integer
+                                            description: 'Tax amount in cents.'
+                                            openapiContext:
+                                                example: 1330
+                                subtotal:
+                                    type: integer
+                                    description: 'Subtotal in cents.'
+                                    openapiContext:
+                                        example: 7000
+                                grandTotal:
+                                    type: integer
+                                    description: 'Grand total in cents.'
+                                    openapiContext:
+                                        example: 8330
+                                priceToPay:
+                                    type: integer
+                                    description: 'Price to pay in cents.'
+                                    openapiContext:
+                                        example: 8330
+                metadata:
+                    type: object
+                    description: 'Version metadata.'
+                    properties:
+                        delivery_date:
+                            type: string
+                            description: 'Requested delivery date.'
+                            openapiContext:
+                                example: '2025-03-01'
+                        note:
+                            type: string
+                            description: 'Note for the quote request.'
+                            openapiContext:
+                                example: 'Please deliver before noon'
+                totals:
+                    type: object
+                    description: 'Calculated totals for this version.'
+                    properties:
+                        subtotal:
+                            type: integer
+                            description: 'Subtotal in cents.'
+                            openapiContext:
+                                example: 7000
+                        grandTotal:
+                            type: integer
+                            description: 'Grand total in cents.'
+                            openapiContext:
+                                example: 8330
 
         customer:
-            type: array
+            type: object
+            objectName: Customer
             writable: false
             readable: true
             description: 'Customer and company user information'
-            openapiContext:
-                example:
-                    firstName: 'Sonia'
-                    lastName: 'Wagner'
-                    email: 'sonia@acme.com'
-                    customerReference: 'DE--21'
-                    idCompanyUser: 18
-                    idCompany: 9
-                    idCompanyBusinessUnit: 29
+            properties:
+                firstName:
+                    type: string
+                    description: 'Customer first name.'
+                    openapiContext:
+                        example: 'Sonia'
+                lastName:
+                    type: string
+                    description: 'Customer last name.'
+                    openapiContext:
+                        example: 'Wagner'
+                email:
+                    type: string
+                    description: 'Customer email address.'
+                    openapiContext:
+                        example: 'sonia@acme.com'
+                customerReference:
+                    type: string
+                    description: 'Unique customer reference.'
+                    openapiContext:
+                        example: 'DE--21'
+                idCompanyUser:
+                    type: integer
+                    description: 'Company user ID.'
+                    openapiContext:
+                        example: 18
+                idCompany:
+                    type: integer
+                    description: 'Company ID.'
+                    openapiContext:
+                        example: 9
+                idCompanyBusinessUnit:
+                    type: integer
+                    description: 'Company business unit ID.'
+                    openapiContext:
+                        example: 29
 
         cartUuid:
             type: string
@@ -169,15 +307,23 @@ resource:
                 example: '1ce91011-8d60-59ef-9fe0-4493ef36c4f0'
 
         metadata:
-            type: array
+            type: object
+            objectName: QuoteRequestMetadata
             writable: true
             readable: false
             required: false
             description: 'Metadata including delivery date and note'
-            openapiContext:
-                example:
-                    delivery_date: '2025-03-01'
-                    note: 'Urgent delivery requested'
+            properties:
+                delivery_date:
+                    type: string
+                    description: 'Requested delivery date.'
+                    openapiContext:
+                        example: '2025-03-01'
+                note:
+                    type: string
+                    description: 'Note for the quote request.'
+                    openapiContext:
+                        example: 'Urgent delivery requested'
 
         companyUserUuid:
             type: string
