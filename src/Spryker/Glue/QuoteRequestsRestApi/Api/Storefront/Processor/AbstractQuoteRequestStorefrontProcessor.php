@@ -13,26 +13,31 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\ApiPlatform\State\Processor\AbstractStorefrontProcessor;
+use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequestClientInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Exception\QuoteRequestsExceptionFactory;
+use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Resolver\CompanyUserResolverTrait;
 use Spryker\Service\Serializer\SerializerServiceInterface;
 
 /**
  * Shared scaffold for the 5 QuoteRequests Storefront processors
  * (`QuoteRequestsStorefrontProcessor` for POST/PATCH on the main resource plus the four
  * action processors — Cancel, Revise, SendToUser, ConvertToQuote). Carries the common
- * dependencies (client / serializer / exception factory), the `CompanyUserTransfer` lookup
- * off the request, the shared `QuoteRequestFilterTransfer` builder used by every action,
+ * dependencies (quote request client / serializer / exception factory / company user client), the
+ * owner-scoping `CompanyUserTransfer` resolution, the shared `QuoteRequestFilterTransfer` builder,
  * the status-only resource denormalizer, and the standard error-response path:
  * a `RestErrorCollectionTransfer` arriving inside an unsuccessful `QuoteRequestResponseTransfer`
  * is mapped to a `GlueApiException` through `QuoteRequestsExceptionFactory::createExceptionFromErrorIdentifier()`.
  */
 abstract class AbstractQuoteRequestStorefrontProcessor extends AbstractStorefrontProcessor
 {
+    use CompanyUserResolverTrait;
+
     public function __construct(
         protected QuoteRequestClientInterface $quoteRequestClient,
         protected SerializerServiceInterface $serializer,
         protected QuoteRequestsExceptionFactory $exceptionFactory,
+        protected CompanyUserClientInterface $companyUserClient,
     ) {
     }
 
@@ -53,17 +58,18 @@ abstract class AbstractQuoteRequestStorefrontProcessor extends AbstractStorefron
     /**
      * Builds the standard filter used by every action endpoint: the `quoteRequestReference`
      * from the URI, the resolved `CompanyUserTransfer` plus its `idCompanyUser`, and
-     * `withVersions: true`.
+     * `withVersions: true`. The `idCompanyUser` is what scopes the read to its owner, so it is
+     * resolved through {@see resolveFullCompanyUser()} rather than taken as it arrives.
      */
     protected function buildQuoteRequestActionFilter(): QuoteRequestFilterTransfer
     {
         $quoteRequestReference = $this->getUriVariables()['quoteRequestReference'] ?? null;
-        $companyUserTransfer = $this->resolveCompanyUser();
+        $companyUserTransfer = $this->resolveFullCompanyUser($this->resolveCompanyUser());
 
         return (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
             ->setCompanyUser($companyUserTransfer)
-            ->setIdCompanyUser($companyUserTransfer?->getIdCompanyUser())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->setWithVersions(true);
     }
 

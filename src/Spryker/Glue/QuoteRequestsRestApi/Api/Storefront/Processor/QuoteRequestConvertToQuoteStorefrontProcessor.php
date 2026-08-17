@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor;
 
 use Generated\Api\Storefront\QuoteRequestConvertToQuoteStorefrontResource;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class QuoteRequestConvertToQuoteStorefrontProcessor extends AbstractQuoteRequestStorefrontProcessor
@@ -22,13 +21,7 @@ class QuoteRequestConvertToQuoteStorefrontProcessor extends AbstractQuoteRequest
      */
     protected function processPost(mixed $data): mixed
     {
-        $quoteRequestReference = $this->getUriVariables()['quoteRequestReference'] ?? null;
-        $companyUserTransfer = $this->resolveCompanyUser();
-
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setCompanyUser($companyUserTransfer)
-            ->setWithVersions(true);
+        $quoteRequestFilterTransfer = $this->buildQuoteRequestActionFilter();
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->getQuoteRequest($quoteRequestFilterTransfer);
 
@@ -54,6 +47,9 @@ class QuoteRequestConvertToQuoteStorefrontProcessor extends AbstractQuoteRequest
     }
 
     /**
+     * `QuoteRequestConverter` reports the glossary key in `QuoteErrorTransfer.message`, not in
+     * `errorIdentifier`, so both fields are consulted.
+     *
      * @throws \Spryker\ApiPlatform\Exception\GlueApiException
      */
     protected function assertQuoteResponseSuccessful(QuoteResponseTransfer $quoteResponseTransfer): void
@@ -63,7 +59,7 @@ class QuoteRequestConvertToQuoteStorefrontProcessor extends AbstractQuoteRequest
         }
 
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-            $errorIdentifier = $quoteErrorTransfer->getErrorIdentifier();
+            $errorIdentifier = $quoteErrorTransfer->getErrorIdentifier() ?? $quoteErrorTransfer->getMessage();
 
             if ($errorIdentifier !== null) {
                 throw $this->exceptionFactory->createExceptionFromErrorIdentifier($errorIdentifier);

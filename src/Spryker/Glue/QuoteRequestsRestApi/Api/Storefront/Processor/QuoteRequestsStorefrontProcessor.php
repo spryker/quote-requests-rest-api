@@ -43,9 +43,9 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
         QuoteRequestsExceptionFactory $exceptionFactory,
         protected QuoteRequestResourceMapper $quoteRequestResourceMapper,
         protected QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
-        protected CompanyUserClientInterface $companyUserClient,
+        CompanyUserClientInterface $companyUserClient,
     ) {
-        parent::__construct($quoteRequestClient, $serializer, $exceptionFactory);
+        parent::__construct($quoteRequestClient, $serializer, $exceptionFactory, $companyUserClient);
     }
 
     /**
@@ -137,7 +137,7 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
      */
     protected function reloadQuoteRequest(
         QuoteRequestTransfer $quoteRequestTransfer,
-        ?CompanyUserTransfer $companyUserTransfer,
+        CompanyUserTransfer $companyUserTransfer,
     ): QuoteRequestTransfer {
         $quoteRequestReference = $quoteRequestTransfer->getQuoteRequestReference();
 
@@ -171,24 +171,6 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
         return $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
     }
 
-    protected function resolveFullCompanyUser(?CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
-    {
-        if ($companyUserTransfer === null || $companyUserTransfer->getIdCompanyUser() !== null) {
-            return $companyUserTransfer;
-        }
-
-        $customerTransfer = $companyUserTransfer->getCustomer() ?? new CustomerTransfer();
-        $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
-
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $resolvedCompanyUserTransfer) {
-            if ($resolvedCompanyUserTransfer->getUuid() === $companyUserTransfer->getUuid()) {
-                return $resolvedCompanyUserTransfer;
-            }
-        }
-
-        return $companyUserTransfer;
-    }
-
     /**
      * Builds the minimal `QuoteTransfer` shape that Zed `QuoteRequestCreator` expects:
      * `uuid` + `customerReference` + `customer` (with the resolved `companyUserTransfer` set so
@@ -200,7 +182,7 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
      * `CompanyUserTransfer.customer` (the company-user subscriber only sets the company-user
      * identifiers, not the nested customer).
      */
-    protected function buildQuoteForCartLookup(string $cartUuid, ?CompanyUserTransfer $companyUserTransfer): QuoteTransfer
+    protected function buildQuoteForCartLookup(string $cartUuid, CompanyUserTransfer $companyUserTransfer): QuoteTransfer
     {
         // Build a detached customer copy so we do not mutate the request-scoped CustomerTransfer
         // (which the API Platform relationship resolver re-reads after our processor returns;
@@ -209,13 +191,10 @@ class QuoteRequestsStorefrontProcessor extends AbstractQuoteRequestStorefrontPro
         $requestCustomerTransfer = $this->getCustomer();
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($requestCustomerTransfer->getIdCustomer())
-            ->setCustomerReference($requestCustomerTransfer->getCustomerReference());
-
-        if ($companyUserTransfer !== null) {
-            $customerTransfer->setCompanyUserTransfer(
+            ->setCustomerReference($requestCustomerTransfer->getCustomerReference())
+            ->setCompanyUserTransfer(
                 (new CompanyUserTransfer())->setIdCompanyUser($companyUserTransfer->getIdCompanyUser()),
             );
-        }
 
         return (new QuoteTransfer())
             ->setUuid($cartUuid)

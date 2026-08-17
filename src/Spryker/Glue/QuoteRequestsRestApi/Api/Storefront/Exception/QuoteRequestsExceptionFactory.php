@@ -73,6 +73,19 @@ class QuoteRequestsExceptionFactory
         );
     }
 
+    /**
+     * Emitted when an `id_company_user` claim resolves to no active company user — the 403 every
+     * quote-request resource declares.
+     */
+    public function createCompanyUserNotSelectedException(): GlueApiException
+    {
+        return new GlueApiException(
+            Response::HTTP_FORBIDDEN,
+            QuoteRequestsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED,
+            QuoteRequestsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED,
+        );
+    }
+
     public function createQuoteRequestWrongStatusException(): GlueApiException
     {
         return new GlueApiException(

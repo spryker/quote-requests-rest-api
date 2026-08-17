@@ -63,6 +63,16 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReader::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
+     */
+    protected const string GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+
+    /**
+     * @uses \Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL
+     */
+    protected const string GLOSSARY_KEY_QUOTE_REQUEST_VALID_UNTIL_EXPIRED = 'quote_request.checkout.convert.error.wrong_valid_until';
+
+    /**
      * @api
      *
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
@@ -137,6 +147,13 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED
+     */
+    public const string RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
 
     /**
      * @api
@@ -231,6 +248,16 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @api
+     */
+    public const string RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user could not be resolved. Request a new company user access token with /company-user-access-tokens.';
+
+    /**
+     * @api
+     */
+    public const string RESPONSE_DETAIL_QUOTE_REQUEST_VALID_UNTIL_EXPIRED = 'Quote request is no longer valid.';
+
+    /**
+     * @api
      *
      * @var string
      */
@@ -277,6 +304,8 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * - Handle "Cart not found" error.
      * - Handle "Cart has wrong status" error.
      * - Handle "User not found" error.
+     * - Handle "Quote request does not exist" error.
+     * - Handle "Quote request is no longer valid" error.
      * - Handle use case, when several customers are trying to manage quote request in parallel.
      * - Handle unsuccessful result.
      *
@@ -296,6 +325,16 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_COMPANY_USER_NOT_FOUND,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND,
+            ],
+            static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND,
+            ],
+            static::GLOSSARY_KEY_QUOTE_REQUEST_VALID_UNTIL_EXPIRED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_QUOTE_REQUEST_VALID_UNTIL_EXPIRED,
             ],
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_WRONG_STATUS,

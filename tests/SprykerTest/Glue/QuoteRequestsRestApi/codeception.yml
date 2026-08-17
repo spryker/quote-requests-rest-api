@@ -1,0 +1,17 @@
+namespace: SprykerTest\Glue\QuoteRequestsRestApi
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+suites:
+    StorefrontApi:
+        path: StorefrontApi
+        actor: QuoteRequestsRestApiStorefrontApiTester
+        modules:
+            enabled:
+                - Asserts

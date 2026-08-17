@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Processor;
 
+use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequestClientInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Exception\QuoteRequestsExceptionFactory;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Mapper\QuoteRequestResourceMapper;
@@ -20,9 +21,10 @@ class QuoteRequestSendToUserStorefrontProcessor extends AbstractQuoteRequestStor
         QuoteRequestClientInterface $quoteRequestClient,
         SerializerServiceInterface $serializer,
         QuoteRequestsExceptionFactory $exceptionFactory,
+        CompanyUserClientInterface $companyUserClient,
         protected QuoteRequestResourceMapper $quoteRequestResourceMapper,
     ) {
-        parent::__construct($quoteRequestClient, $serializer, $exceptionFactory);
+        parent::__construct($quoteRequestClient, $serializer, $exceptionFactory, $companyUserClient);
     }
 
     /**

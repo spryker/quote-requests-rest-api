@@ -10,17 +10,19 @@ declare(strict_types=1);
 namespace Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Provider;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Spryker\ApiPlatform\State\Provider\AbstractStorefrontProvider;
 use Spryker\Client\CompanyUser\CompanyUserClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequestClientInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Exception\QuoteRequestsExceptionFactory;
 use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Mapper\QuoteRequestResourceMapper;
+use Spryker\Glue\QuoteRequestsRestApi\Api\Storefront\Resolver\CompanyUserResolverTrait;
 use Spryker\Service\Serializer\SerializerServiceInterface;
 
 class QuoteRequestsStorefrontProvider extends AbstractStorefrontProvider
 {
+    use CompanyUserResolverTrait;
+
     public function __construct(
         protected QuoteRequestClientInterface $quoteRequestClient,
         protected SerializerServiceInterface $serializer,
@@ -87,28 +89,10 @@ class QuoteRequestsStorefrontProvider extends AbstractStorefrontProvider
         );
     }
 
-    protected function resolveFullCompanyUser(?CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
-    {
-        if ($companyUserTransfer === null || $companyUserTransfer->getIdCompanyUser() !== null) {
-            return $companyUserTransfer;
-        }
-
-        $customerTransfer = $companyUserTransfer->getCustomer() ?? new CustomerTransfer();
-        $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
-
-        foreach ($companyUserCollectionTransfer->getCompanyUsers() as $resolvedCompanyUserTransfer) {
-            if ($resolvedCompanyUserTransfer->getUuid() === $companyUserTransfer->getUuid()) {
-                return $resolvedCompanyUserTransfer;
-            }
-        }
-
-        return $companyUserTransfer;
-    }
-
     /**
      * The {@see \Spryker\Glue\CompanyUsersRestApi\Api\Storefront\EventSubscriber\CompanyUserIdentityRequestSubscriber}
      * resolves the company user from the OAuth claims and attaches it to the request-scoped
-     * {@see CustomerTransfer} (not as a separate request attribute).
+     * {@see \Generated\Shared\Transfer\CustomerTransfer} (not as a separate request attribute).
      */
     protected function resolveCompanyUser(): ?CompanyUserTransfer
     {
