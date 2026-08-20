@@ -19,16 +19,14 @@ resource:
                   fromClass: QuoteRequestsStorefrontResource
           openapiContext:
               responses:
-                  200:
+                  201:
                       description: 'Quote request sent to the company user.'
                   401:
                       description: 'Missing or invalid access token.'
                   403:
                       description: 'Authenticated customer is not a company user.'
-                  404:
-                      description: 'Quote request not found (code 4501).'
                   422:
-                      description: 'Quote request status does not allow sending (code 4504).'
+                      description: 'Quote request status does not allow sending (code 4504), or the reference does not resolve to a quote request of the authenticated company user (code 4506).'
 
     properties:
         quoteRequestReference:

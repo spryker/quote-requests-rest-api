@@ -19,7 +19,7 @@ resource:
                   fromClass: QuoteRequestsStorefrontResource
           openapiContext:
               responses:
-                  200:
+                  201:
                       description: 'Quote request reverted to draft for revision.'
                   401:
                       description: 'Missing or invalid access token.'
