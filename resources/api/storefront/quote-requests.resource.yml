@@ -23,6 +23,9 @@ resource:
                       description: 'Authenticated customer is not a company user.'
 
         - type: Get
+          extraProperties:
+              notFoundCode: '4501'
+              notFoundMessage: 'Quote request not found.'
           description: 'Retrieve a specific quote request by reference'
           openapiContext:
               responses:
@@ -51,6 +54,9 @@ resource:
                       description: 'Request validation failed (cartUuid blank — code 901, cart empty — code 4503, invalid delivery date — code 4506).'
 
         - type: Patch
+          extraProperties:
+              notFoundCode: '4501'
+              notFoundMessage: 'Quote request not found.'
           description: 'Update an existing quote request'
           openapiContext:
               responses:

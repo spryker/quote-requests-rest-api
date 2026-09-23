@@ -11,6 +11,9 @@ resource:
 
     operations:
         - type: Post
+          extraProperties:
+              notFoundCode: '4501'
+              notFoundMessage: 'Quote request not found.'
           description: 'Send a quote request to user'
           uriTemplate: '/quote-requests/{quoteRequestReference}/quote-request-send-to-user'
           uriVariables:
@@ -25,6 +28,8 @@ resource:
                       description: 'Missing or invalid access token.'
                   403:
                       description: 'Authenticated customer is not a company user.'
+                  404:
+                      description: 'Quote request not found (code 4501).'
                   422:
                       description: 'Quote request status does not allow sending (code 4504), or the reference does not resolve to a quote request of the authenticated company user (code 4506).'
 

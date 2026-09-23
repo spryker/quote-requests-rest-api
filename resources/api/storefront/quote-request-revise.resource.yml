@@ -11,6 +11,9 @@ resource:
 
     operations:
         - type: Post
+          extraProperties:
+              notFoundCode: '4501'
+              notFoundMessage: 'Quote request not found.'
           description: 'Revise a quote request'
           uriTemplate: '/quote-requests/{quoteRequestReference}/quote-request-revise'
           uriVariables:
