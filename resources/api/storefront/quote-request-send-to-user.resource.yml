@@ -172,7 +172,8 @@ resource:
                                 example: 'Please deliver before noon'
                 totals:
                     type: object
-                    description: 'Calculated totals for this version.'
+                    responseOptional: true
+                    description: "Calculated totals for this version. Populated only where the version carries totals of its own; the mapper exposes the cart snapshot's under cart.totals."
                     properties:
                         subtotal:
                             type: integer

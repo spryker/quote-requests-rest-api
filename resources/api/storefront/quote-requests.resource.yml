@@ -109,7 +109,8 @@ resource:
             type: string
             writable: false
             readable: true
-            description: 'Expiration timestamp'
+            responseOptional: true
+            description: 'Expiration timestamp. Set by the agent when the offer is sent back to the customer; a request the customer has just raised carries none, and the field is read-only here.'
             openapiContext:
                 example: '2025-02-01T23:59:59+00:00'
 
@@ -247,7 +248,8 @@ resource:
                                 example: 'Please deliver before noon'
                 totals:
                     type: object
-                    description: 'Calculated totals for this version.'
+                    responseOptional: true
+                    description: "Calculated totals for this version. Populated only where the version carries totals of its own; the mapper exposes the cart snapshot's under cart.totals."
                     properties:
                         subtotal:
                             type: integer
